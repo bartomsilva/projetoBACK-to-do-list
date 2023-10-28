@@ -33,8 +33,8 @@ API contendo um CRUD para gerenciar lista de tarefas
 ![image](https://github.com/bartomsilva/projetoBACK-to-do-list/assets/106079184/ba3f6984-083d-495f-af28-fcbd34d46f14)
 
 - src -> pasta principal
-- controller -> contém os arquivos que lidam com as solicitação do cliente (recebe solicitações e devolve uma respostas).
-- business -> contém os arquivos que lidam com as regras de negócio, validações, formatação de saída e ligação com o banco dados.
+- controller -> contém os arquivos que lidam com as solicitações dos clientes (recebe solicitações e devolve uma respostas).
+- business -> contém os arquivos que lidam com as regras de negócio: validações, formatação de saída e ligação com o banco dados.
 - database -> contém o banco de dados e arquivos de configuração para o banco de dados.
 - error -> contém os arquivos de tratamento de erro.
 - model -> contém os modelos de classes e ENUMS.
