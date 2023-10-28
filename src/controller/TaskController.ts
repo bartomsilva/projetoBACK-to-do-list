@@ -59,7 +59,6 @@ export class TaskController {
       await this.taskBusiness.deleteTask(id)
       res.status(201).send("Tarefa excluida com sucesso")
     } catch (error: unknown) {
-      console.log(error)
       handlerError(res, error)
     }
   }
