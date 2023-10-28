@@ -9,7 +9,7 @@ Uma API contendo um CRUD para gerenciar lista de tarefas
 - [x] Editar tarefa
 - [x] Deletar tarefa
 - [ ] Validação dos dados utiilzando o ZOD
-- [?] POO - Divisão em camadas
+- [x] POO - Divisão em camadas
 
 ### Quais tecnologias vão ser utilizadas:
 
