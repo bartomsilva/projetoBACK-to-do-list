@@ -10,7 +10,7 @@ API contendo um CRUD para gerenciar lista de tarefas
 - [x] Deletar tarefa
 - [x] POO - Divisão em camadas
 - [x] POO Inject dependency
-- [ ] Validação dos dados utiilzando o ZOD
+- [ ] Validação dos dados utiilzando o ZOD **falta**
 
 ### Quais tecnologias vão ser utilizadas:
 
@@ -40,6 +40,26 @@ API contendo um CRUD para gerenciar lista de tarefas
 - model -> contém os modelos de classes e ENUMS.
 - routes -> contém os arquivos de rotas (direcionamento das funcionidades)
 - services => contém os arquivos de serviços auxiliares, exemplo: Gerador de Id.
+
+### Se desejar dar uma olhada no seu pc:
+
+Basta clonar este repostório.
+```
+git clone https://github.com/bartomsilva/projetoBACK-to-do-list.git
+```
+
+Dentro da pasta que será cridada após a clonagem, execute o camando abaixo para atualizar as dependências.:
+```bash
+npm install
+```
+
+Para Executar o projeto utilize o seguinte comando:
+```
+npm run dev
+```
+
+Para testar as funcionalidades veja a documentação:
+<a href="https://documenter.getpostman.com/view/26149268/2s9YRGxUYT">documentação</v>
 
 
 
