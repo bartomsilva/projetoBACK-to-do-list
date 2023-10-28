@@ -2,8 +2,9 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../database/sequelize';
 
 class Task extends Model {
-  public id!: number;
-  public title!: string;
+  public id!: string;
+  public date!: string;
+  public time!: string;
   public description!: string;
 }
 

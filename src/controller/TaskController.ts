@@ -44,13 +44,17 @@ class TaskController {
   public async updateTask(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const { title, description } = req.body;
+      const { description, date, time } = req.body;
       const task = await Task.findByPk(id);
 
       if (!task) {
         return res.status(404).json({ error: 'Tarefa não encontrada' });
       }
-      task.description = description;
+
+      task.description = description ?? task.description;
+      task.date = date ?? task.date 
+      task.time = time ?? task.time
+
       await task.save();
       return res.status(200).json(task);
     } catch (error) {
