@@ -1,43 +1,39 @@
 // TaskController.ts
 import { Request, Response } from 'express';
 import { Task } from '../model/Task';
-import { TASK_STATUS } from '../model/Status';
-import { GeneratorId } from '../services/GeneratorId';
+import { TaskBusiness } from '../business/TaskBusiness';
+import { BadRequestError } from '../error/BadRequest';
+import { handlerError } from '../error/handlerError';
+import { NotFoundError } from '../error/NotFound';
 
-class TaskController {
+export class TaskController {
 
-  // constructor(private genId: GeneratorId) {
-  // }
+  private taskBusiness = new TaskBusiness()
   
   public async createTask(req: Request, res: Response) {
-    const genId = new GeneratorId()
     try {
       const { description, date, time } = req.body;
-      const id =  genId.generate()
 
       // validar com zod
-      const newTask = {
-        id,
+      const input = {
         description,
         date,
-        time,
-        status: TASK_STATUS.OPEN
-      }     
-      console.log(newTask) 
-      const task = await Task.create(newTask);
-      res.status(201).json(task);
+        time
+      }
+      const response = await this.taskBusiness.createTask(input)
+      res.status(201).json(response);
+
     } catch (error) {
-      console.log(error)
-      res.status(500).json({ error: 'Erro ao criar a tarefa' });
+      handlerError(res, error)
     }
   }
 
   public async getTasks(req: Request, res: Response) {
     try {
       const tasks = await Task.findAll();
-      return res.status(200).json(tasks);
+      res.status(200).json(tasks);
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar tarefas' });
+      handlerError(res, error)
     }
   }
 
@@ -48,7 +44,7 @@ class TaskController {
       const task = await Task.findByPk(id);
 
       if (!task) {
-        return res.status(404).json({ error: 'Tarefa não encontrada' });
+        throw new NotFoundError('Tarefa não encontrada' );
       }
 
       task.description = description ?? task.description;
@@ -56,9 +52,9 @@ class TaskController {
       task.time = time ?? task.time
 
       await task.save();
-      return res.status(200).json(task);
+      res.status(200).json(task);      
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao atualizar a tarefa' });
+      handlerError(res, error)
     }
   }
 
@@ -67,15 +63,15 @@ class TaskController {
       const { id } = req.params;
       const task = await Task.findByPk(id);
       if (!task) {
-        throw new Error ('Tarefa não encontrada');
+        throw new BadRequestError ('Tarefa não encontrada');
       }
       await task.destroy();
       res.status(201).send("Tarefa excluida com sucesso");
 
     } catch (error: unknown) {
       console.log(error)
-      res.status(400).send(error);
+      handlerError(res, error)
     }
   }
 }
-export { TaskController };
+
