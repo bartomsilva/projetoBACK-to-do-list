@@ -1,17 +1,15 @@
 // TaskController.ts
 import { Request, Response } from 'express'
-import { Task } from '../model/Task'
 import { TaskBusiness } from '../business/TaskBusiness'
-import { BadRequestError } from '../error/BadRequest'
 import { handlerError } from '../error/handlerError'
-import { NotFoundError } from '../error/NotFound'
 
-const taskBusiness = new TaskBusiness()
+// const taskBusiness = new TaskBusiness()
 export class TaskController {
 
-  public async createTask(req: Request, res: Response) {
-    try {
+  constructor( private taskBusiness: TaskBusiness){}
 
+  public createTask = async (req: Request, res: Response):Promise<void> => {
+    try {
 
       const { description, date, time } = req.body
 
@@ -21,7 +19,7 @@ export class TaskController {
         date,
         time
       }
-      const response = await taskBusiness.createTask(input)
+      const response = await this.taskBusiness.createTask(input)
       res.status(201).json(response)
 
     } catch (error) {
@@ -29,20 +27,17 @@ export class TaskController {
     }
   }
 
-  public async getTasks(req: Request, res: Response) {
+  public getTasks = async (req: Request, res: Response):Promise<void> => {
     try {
       const input = { id: req.query.id as string }
-      console.log(input)
-      console.log(input.id)
-
-      const tasks = await taskBusiness.getTasks(input)
+      const tasks = await this.taskBusiness.getTasks(input)
       res.status(200).json(tasks)
     } catch (error) {
       handlerError(res, error)
     }
   }
 
-  public async updateTask(req: Request, res: Response) {
+  public updateTask = async (req: Request, res: Response):Promise<void> => {
     try {
       const { id } = req.params
 
@@ -51,18 +46,17 @@ export class TaskController {
         date: req.body.date,
         time: req.body.time
       }
-      const task = await taskBusiness.updateTask(id, input)
-
+      const task = await this.taskBusiness.updateTask(id, input)
       res.status(200).json(task)
     } catch (error) {
       handlerError(res, error)
     }
   }
 
-  public async deleteTask(req: Request, res: Response) {
+  public deleteTask = async (req: Request, res: Response):Promise<void> => {
     try {
       const { id } = req.params
-      await taskBusiness.deleteTask(id)
+      await this.taskBusiness.deleteTask(id)
       res.status(201).send("Tarefa excluida com sucesso")
     } catch (error: unknown) {
       console.log(error)
