@@ -6,12 +6,13 @@ import { BadRequestError } from '../error/BadRequest';
 import { handlerError } from '../error/handlerError';
 import { NotFoundError } from '../error/NotFound';
 
+const taskBusiness = new TaskBusiness()
 export class TaskController {
 
-  private taskBusiness = new TaskBusiness()
-  
   public async createTask(req: Request, res: Response) {
     try {
+
+
       const { description, date, time } = req.body;
 
       // validar com zod
@@ -20,7 +21,7 @@ export class TaskController {
         date,
         time
       }
-      const response = await this.taskBusiness.createTask(input)
+      const response = await taskBusiness.createTask(input)
       res.status(201).json(response);
 
     } catch (error) {
@@ -30,7 +31,11 @@ export class TaskController {
 
   public async getTasks(req: Request, res: Response) {
     try {
-      const tasks = await Task.findAll();
+      const input = { id: req.query.id as string }
+      console.log(input)
+      console.log(input.id)
+
+      const tasks = await taskBusiness.getTasks(input)
       res.status(200).json(tasks);
     } catch (error) {
       handlerError(res, error)
@@ -40,19 +45,15 @@ export class TaskController {
   public async updateTask(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const { description, date, time } = req.body;
-      const task = await Task.findByPk(id);
 
-      if (!task) {
-        throw new NotFoundError('Tarefa não encontrada' );
+      const input = {
+        description: req.body.description,
+        date: req.body.date,
+        time: req.body.time
       }
+      const task = await taskBusiness.updateTask(id, input)
 
-      task.description = description ?? task.description;
-      task.date = date ?? task.date 
-      task.time = time ?? task.time
-
-      await task.save();
-      res.status(200).json(task);      
+      res.status(200).json(task);
     } catch (error) {
       handlerError(res, error)
     }
@@ -61,13 +62,8 @@ export class TaskController {
   public async deleteTask(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const task = await Task.findByPk(id);
-      if (!task) {
-        throw new BadRequestError ('Tarefa não encontrada');
-      }
-      await task.destroy();
+      await taskBusiness.deleteTask(id)
       res.status(201).send("Tarefa excluida com sucesso");
-
     } catch (error: unknown) {
       console.log(error)
       handlerError(res, error)

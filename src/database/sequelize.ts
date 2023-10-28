@@ -6,7 +6,6 @@ const sequelize = new Sequelize({
   storage: './src/database/task.db',  
   logging: false,  
 });
-console.log("conexão com banco de dados bem sucedida")
 
 export { sequelize };
 
