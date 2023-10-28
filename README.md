@@ -28,7 +28,7 @@ API contendo um CRUD para gerenciar lista de tarefas
 - [ ] Token ( JWT )
 - [ ] Todo sistema de task ( precisará de token )
 
-### Pasta do projeto
+### Pastas do projeto:
 
 ![image](https://github.com/bartomsilva/projetoBACK-to-do-list/assets/106079184/ba3f6984-083d-495f-af28-fcbd34d46f14)
 
