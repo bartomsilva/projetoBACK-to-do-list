@@ -66,15 +66,15 @@ class TaskController {
     try {
       const { id } = req.params;
       const task = await Task.findByPk(id);
-
       if (!task) {
-        return res.status(404).json({ error: 'Tarefa não encontrada' });
+        throw new Error ('Tarefa não encontrada');
       }
-
       await task.destroy();
-      return res.status(204).send();
-    } catch (error) {
-      return res.status(500).json({ error: 'Erro ao excluir a tarefa' });
+      res.status(201).send("Tarefa excluida com sucesso");
+
+    } catch (error: unknown) {
+      console.log(error)
+      res.status(400).send(error);
     }
   }
 }
