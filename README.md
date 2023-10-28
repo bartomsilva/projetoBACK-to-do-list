@@ -8,8 +8,9 @@ Uma API contendo um CRUD para gerenciar lista de tarefas
 - [x] Obter tarefa por Id
 - [x] Editar tarefa
 - [x] Deletar tarefa
-- [ ] Validação dos dados utiilzando o ZOD
 - [x] POO - Divisão em camadas
+- [x] POO Inject dependency
+- [ ] Validação dos dados utiilzando o ZOD
 
 ### Quais tecnologias vão ser utilizadas:
 
@@ -18,12 +19,12 @@ Uma API contendo um CRUD para gerenciar lista de tarefas
 - [x] UUID
 - [x] Express
 - [x] Sequelize
-- [ ] Zod
+- [ ] Zod (validação dos dados
  
 ### Em seguida:
 - [ ] Login
 - [ ] Signup
-- [ ] Dotenv
+- [ ] Dotenv (variáveis de ambiente)
 - [ ] Token ( JWT )
-- [ ] Todo sistema de task precisará de token
+- [ ] Todo sistema de task ( precisará de token )
   
