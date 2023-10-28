@@ -1,4 +1,4 @@
-# projetoBACK-to-do-list
+# projeto: to-do-list
 
 API contendo um CRUD para gerenciar lista de tarefas
 
