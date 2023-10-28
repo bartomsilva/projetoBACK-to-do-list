@@ -8,8 +8,8 @@ Uma API contendo um CRUD para gerenciar lista de tarefas
 - [x] Obter tarefa por Id
 - [x] Editar tarefa
 - [x] Deletar tarefa
-- [x] Validação dos dados utiilzando o ZOD
-- [x] POO - Divisão em camadas
+- [ ] Validação dos dados utiilzando o ZOD
+- [?] POO - Divisão em camadas
 
 ### Quais tecnologias vão ser utilizadas:
 
@@ -18,7 +18,7 @@ Uma API contendo um CRUD para gerenciar lista de tarefas
 - [x] UUID
 - [x] Express
 - [x] Sequelize
-- [x] Zod
+- [ ] Zod
  
 ### Em seguida:
 - [ ] Login
