@@ -1,10 +1,10 @@
 // TaskController.ts
-import { Request, Response } from 'express';
-import { Task } from '../model/Task';
-import { TaskBusiness } from '../business/TaskBusiness';
-import { BadRequestError } from '../error/BadRequest';
-import { handlerError } from '../error/handlerError';
-import { NotFoundError } from '../error/NotFound';
+import { Request, Response } from 'express'
+import { Task } from '../model/Task'
+import { TaskBusiness } from '../business/TaskBusiness'
+import { BadRequestError } from '../error/BadRequest'
+import { handlerError } from '../error/handlerError'
+import { NotFoundError } from '../error/NotFound'
 
 const taskBusiness = new TaskBusiness()
 export class TaskController {
@@ -13,7 +13,7 @@ export class TaskController {
     try {
 
 
-      const { description, date, time } = req.body;
+      const { description, date, time } = req.body
 
       // validar com zod
       const input = {
@@ -22,7 +22,7 @@ export class TaskController {
         time
       }
       const response = await taskBusiness.createTask(input)
-      res.status(201).json(response);
+      res.status(201).json(response)
 
     } catch (error) {
       handlerError(res, error)
@@ -36,7 +36,7 @@ export class TaskController {
       console.log(input.id)
 
       const tasks = await taskBusiness.getTasks(input)
-      res.status(200).json(tasks);
+      res.status(200).json(tasks)
     } catch (error) {
       handlerError(res, error)
     }
@@ -44,7 +44,7 @@ export class TaskController {
 
   public async updateTask(req: Request, res: Response) {
     try {
-      const { id } = req.params;
+      const { id } = req.params
 
       const input = {
         description: req.body.description,
@@ -53,7 +53,7 @@ export class TaskController {
       }
       const task = await taskBusiness.updateTask(id, input)
 
-      res.status(200).json(task);
+      res.status(200).json(task)
     } catch (error) {
       handlerError(res, error)
     }
@@ -61,9 +61,9 @@ export class TaskController {
 
   public async deleteTask(req: Request, res: Response) {
     try {
-      const { id } = req.params;
+      const { id } = req.params
       await taskBusiness.deleteTask(id)
-      res.status(201).send("Tarefa excluida com sucesso");
+      res.status(201).send("Tarefa excluida com sucesso")
     } catch (error: unknown) {
       console.log(error)
       handlerError(res, error)

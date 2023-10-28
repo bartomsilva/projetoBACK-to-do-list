@@ -1,11 +1,13 @@
-import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../database/sequelize';
+import { DataTypes, Model } from 'sequelize'
+import { sequelize } from '../database/sequelize'
+import { TASK_STATUS } from './Status'
 
 class Task extends Model {
-  public id!: string;
-  public date!: string;
-  public time!: string;
-  public description!: string;
+  public id!: string
+  public date!: string
+  public time!: string
+  public description!: string
+  public status!: TASK_STATUS
 }
 
 Task.init(
@@ -36,6 +38,6 @@ Task.init(
     modelName: 'Task',
     tableName: 'tasks',
   }
-);
+)
 
-export { Task };
+export { Task }
