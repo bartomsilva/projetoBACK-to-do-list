@@ -8,6 +8,8 @@ class Task extends Model {
   public time!: string
   public description!: string
   public status!: TASK_STATUS
+  public createdAt!: string
+  public updatedAt!: string
 }
 
 Task.init(

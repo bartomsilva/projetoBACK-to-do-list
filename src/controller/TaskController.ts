@@ -2,23 +2,24 @@
 import { Request, Response } from 'express'
 import { TaskBusiness } from '../business/TaskBusiness'
 import { handlerError } from '../error/handlerError'
+import { GetTasksSchema } from '../dtos/getTasks.dto'
+import { CreateTaskSchema } from '../dtos/createTask.dto'
 
-// const taskBusiness = new TaskBusiness()
 export class TaskController {
 
-  constructor( private taskBusiness: TaskBusiness){}
+  constructor(private taskBusiness: TaskBusiness) { }
 
-  public createTask = async (req: Request, res: Response):Promise<void> => {
+  public createTask = async (req: Request, res: Response): Promise<void> => {
     try {
 
       const { description, date, time } = req.body
 
-      // validar com zod
-      const input = {
+      const input = CreateTaskSchema.parse({
         description,
         date,
         time
-      }
+      })
+
       const response = await this.taskBusiness.createTask(input)
       res.status(201).json(response)
 
@@ -27,9 +28,12 @@ export class TaskController {
     }
   }
 
-  public getTasks = async (req: Request, res: Response):Promise<void> => {
+  public getTasks = async (req: Request, res: Response): Promise<void> => {
     try {
-      const input = { id: req.query.id as string }
+      const input = GetTasksSchema.parse({
+        id: req.params.id,
+        status: req.query.status as string
+      })
       const tasks = await this.taskBusiness.getTasks(input)
       res.status(200).json(tasks)
     } catch (error) {
@@ -37,7 +41,7 @@ export class TaskController {
     }
   }
 
-  public updateTask = async (req: Request, res: Response):Promise<void> => {
+  public updateTask = async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params
 
@@ -53,7 +57,7 @@ export class TaskController {
     }
   }
 
-  public deleteTask = async (req: Request, res: Response):Promise<void> => {
+  public deleteTask = async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params
       await this.taskBusiness.deleteTask(id)

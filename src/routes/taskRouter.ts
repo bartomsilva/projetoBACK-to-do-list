@@ -13,7 +13,10 @@ const taskController = new TaskController
 )
 
 taskRouter.get("/", taskController.getTasks)
+taskRouter.get("/:id", taskController.getTasks)
+
 taskRouter.post("/", taskController.createTask)
+
 taskRouter.put("/:id", taskController.updateTask)
 taskRouter.delete("/:id", taskController.deleteTask)
 

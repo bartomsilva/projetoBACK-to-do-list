@@ -4,6 +4,7 @@ import { TASK_STATUS } from "../model/Status";
 import { IdGenerator } from "../services/IdGenerator";
 import { NotFoundError } from "../error/NotFound";
 import { BadRequestError } from "../error/BadRequest";
+import { GetTasksInputDTO } from "../dtos/getTasks.dto";
 
 export class TaskBusiness {
   constructor(private idGenerator: IdGenerator) { }
@@ -17,11 +18,17 @@ export class TaskBusiness {
     return await Task.create(newTask)
   }
 
-  public getTasks = async (input: { id: string | undefined }) => {
-    if (!input.id) {
-      return await Task.findAll();
-    } else {
-      return await Task.findByPk(input.id)
+  public getTasks = async (input: GetTasksInputDTO): Promise<any> => {
+
+    switch (true) {
+      case (input.id !== undefined):
+        return await Task.findByPk(input.id)
+      case (input.id === undefined && input.status===undefined):
+        return await Task.findAll();
+      case (input.status !== undefined):
+        return await Task.findOne({
+          where: { status: input.status }
+        })
     }
   }
 

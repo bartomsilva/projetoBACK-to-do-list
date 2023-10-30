@@ -6,7 +6,7 @@ import { HTTP_CODE } from "../model/Status"
 
 export const handlerError = (res: Response, error: unknown) => {
   if (error instanceof ZodError) {
-    res.status(HTTP_CODE.BAD_REQUEST).send(error.issues[0])
+    res.status(HTTP_CODE.BAD_REQUEST).send(error.issues[0].message)
   } else if (error instanceof BaseError) {
     res.status(error.statusCode).send({message: error.message}) 
   } else {
