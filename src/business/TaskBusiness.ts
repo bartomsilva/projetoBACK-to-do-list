@@ -5,6 +5,7 @@ import { IdGenerator } from "../services/IdGenerator";
 import { NotFoundError } from "../error/NotFound";
 import { BadRequestError } from "../error/BadRequest";
 import { GetTasksInputDTO } from "../dtos/getTasks.dto";
+import { UpdateTaskInputDTO } from "../dtos/updateTask.dto";
 
 export class TaskBusiness {
   constructor(private idGenerator: IdGenerator) { }
@@ -19,7 +20,6 @@ export class TaskBusiness {
   }
 
   public getTasks = async (input: GetTasksInputDTO): Promise<any> => {
-
     switch (true) {
       case (input.id !== undefined):
         return await Task.findByPk(input.id)
@@ -32,19 +32,18 @@ export class TaskBusiness {
     }
   }
 
-  public updateTask = async (id: string, input: { description: string, date: string, time: string }) => {
-
+  public updateTask = async (id: string, updateTask: UpdateTaskInputDTO) => {
     const task = await Task.findByPk(id);
-
-    const { description, date, time } = input
+    const { description, date, time } = updateTask
     if (!task) {
       throw new NotFoundError('Tarefa não encontrada');
     }
-
+    if(!task.status.includes(TASK_STATUS.OPEN) && !task.status.includes(TASK_STATUS.PAUSED)){
+      throw new BadRequestError("O Status da Task não permite alteração")
+    }
     task.description = description ?? task.description;
     task.date = date ?? task.date
     task.time = time ?? task.time
-
     return await task.save();
   }
 
@@ -55,5 +54,4 @@ export class TaskBusiness {
     }
     await task.destroy();
   }
-
 }

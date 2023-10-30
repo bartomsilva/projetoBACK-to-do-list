@@ -4,25 +4,21 @@ import { TaskBusiness } from '../business/TaskBusiness'
 import { handlerError } from '../error/handlerError'
 import { GetTasksSchema } from '../dtos/getTasks.dto'
 import { CreateTaskSchema } from '../dtos/createTask.dto'
-
+import { UpdateTaskSchema } from '../dtos/updateTask.dto'
 export class TaskController {
 
   constructor(private taskBusiness: TaskBusiness) { }
 
   public createTask = async (req: Request, res: Response): Promise<void> => {
     try {
-
       const { description, date, time } = req.body
-
       const input = CreateTaskSchema.parse({
         description,
         date,
         time
       })
-
       const response = await this.taskBusiness.createTask(input)
       res.status(201).json(response)
-
     } catch (error) {
       handlerError(res, error)
     }
@@ -44,12 +40,11 @@ export class TaskController {
   public updateTask = async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params
-
-      const input = {
+      const input = UpdateTaskSchema.parse({        
         description: req.body.description,
         date: req.body.date,
         time: req.body.time
-      }
+      })
       const task = await this.taskBusiness.updateTask(id, input)
       res.status(200).json(task)
     } catch (error) {
