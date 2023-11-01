@@ -6,11 +6,12 @@ import { NotFoundError } from "../error/NotFound"
 import { BadRequestError } from "../error/BadRequest"
 import { GetTasksInputDTO } from "../dtos/getTasks.dto"
 import { UpdateTaskInputDTO } from "../dtos/updateTask.dto"
+import { CreateTaskInputDTO } from "../dtos/createTask.dto"
 
 export class TaskBusiness {
   constructor(private idGenerator: IdGenerator) { }
 
-  public createTask = async (input: {}) => {
+  public createTask = async (input: CreateTaskInputDTO):Promise<Task> => {
     const newTask = {
       ...input,
       id: this.idGenerator.generate(),
@@ -35,7 +36,7 @@ export class TaskBusiness {
     }
   }
 
-  public updateTask = async (id: string, updateTask: UpdateTaskInputDTO) => {
+  public updateTask = async (id: string, updateTask: UpdateTaskInputDTO):Promise<Task> => {
     const task = await Task.findByPk(id)
     const { description, date, time } = updateTask
     if (!task) {
@@ -50,7 +51,7 @@ export class TaskBusiness {
     return await task.save()
   }
 
-  public deleteTask = async (id: string) => {
+  public deleteTask = async (id: string):Promise<void> => {
     const task = await Task.findByPk(id)
     if (!task) {
       throw new BadRequestError('Tarefa não encontrada')
