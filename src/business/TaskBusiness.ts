@@ -26,7 +26,7 @@ export class TaskBusiness {
       case (input.id === undefined && input.status===undefined):
         return await Task.findAll();
       case (input.status !== undefined):
-        return await Task.findOne({
+        return await Task.findAll({
           where: { status: input.status }
         })
     }
